@@ -1,0 +1,26 @@
+{
+  "players": [
+    {
+      "id": "player_1703123456789_abc123def",
+      "username": "admin",
+      "email": "admin@game.local",
+      "passwordHash": "$2a$12$example.hash.here",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "lastLogin": "2024-01-01T12:00:00.000Z",
+      "stats": {
+        "gamesPlayed": 1,
+        "totalScore": 0,
+        "totalPlayTime": 0,
+        "levelsCompleted": 0,
+        "achievementsUnlocked": 0,
+        "heroesRecruited": 0,
+        "resourcesCollected": 0,
+        "enemiesDefeated": 0
+      },
+      "isGuest": false,
+      "isActive": true
+    }
+  ],
+  "progress": [],
+  "leaderboard": []
+}

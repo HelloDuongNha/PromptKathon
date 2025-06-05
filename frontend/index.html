@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiến Tranh Việt Nam - Game Lịch Sử</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>Đang tải game...</h2>
+            <div class="loading-bar">
+                <div class="loading-progress" id="loading-progress"></div>
+            </div>
+            <p id="loading-text">Khởi tạo...</p>
+        </div>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="main-menu" class="screen hidden">
+        <div class="menu-background">
+            <div class="menu-overlay"></div>
+        </div>
+        <div class="menu-content">
+            <div class="game-title">
+                <h1>CHIẾN TRANH VIỆT NAM</h1>
+                <p class="subtitle">Hành trình giải phóng dân tộc</p>
+            </div>
+            <nav class="main-nav">
+                <button class="menu-btn primary" id="new-game-btn">
+                    <span>🎮</span> Trò chơi mới
+                </button>
+                <button class="menu-btn" id="continue-game-btn">
+                    <span>📁</span> Tiếp tục
+                </button>
+                <button class="menu-btn" id="leaderboard-btn">
+                    <span>🏆</span> Bảng xếp hạng
+                </button>
+                <button class="menu-btn" id="settings-btn">
+                    <span>⚙️</span> Cài đặt
+                </button>
+                <button class="menu-btn" id="about-btn">
+                    <span>ℹ️</span> Giới thiệu
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen hidden">
+        <div class="login-container">
+            <div class="login-form">
+                <h2>Đăng nhập</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Tên đăng nhập:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mật khẩu:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn primary">Đăng nhập</button>
+                </form>
+                <div class="auth-links">
+                    <p>Chưa có tài khoản? <a href="#" id="show-register">Đăng ký ngay</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Screen -->
+    <div id="register-screen" class="screen hidden">
+        <div class="login-container">
+            <div class="login-form">
+                <h2>Đăng ký</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="reg-username">Tên đăng nhập:</label>
+                        <input type="text" id="reg-username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email:</label>
+                        <input type="email" id="reg-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Mật khẩu:</label>
+                        <input type="password" id="reg-password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Xác nhận mật khẩu:</label>
+                        <input type="password" id="confirm-password" name="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn primary">Đăng ký</button>
+                </form>
+                <div class="auth-links">
+                    <p>Đã có tài khoản? <a href="#" id="show-login">Đăng nhập</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Canvas -->
+    <div id="game-screen" class="screen hidden">
+        <div class="game-ui">
+            <!-- Top UI Bar -->
+            <div class="ui-top">
+                <div class="resources">
+                    <div class="resource">
+                        <span class="resource-icon">🍚</span>
+                        <span id="rice-count">100</span>
+                    </div>
+                    <div class="resource">
+                        <span class="resource-icon">🪵</span>
+                        <span id="wood-count">50</span>
+                    </div>
+                    <div class="resource">
+                        <span class="resource-icon">🏅</span>
+                        <span id="medals-count">10</span>
+                    </div>
+                </div>
+                <div class="player-info">
+                    <div class="level">Cấp độ: <span id="player-level">1</span></div>
+                    <div class="score">Điểm: <span id="player-score">0</span></div>
+                </div>
+                <div class="game-controls">
+                    <button class="control-btn" id="pause-btn">⏸️</button>
+                    <button class="control-btn" id="menu-btn">🏠</button>
+                </div>
+            </div>
+
+            <!-- Game Canvas -->
+            <canvas id="game-canvas" width="1200" height="800"></canvas>
+
+            <!-- Bottom UI Bar -->
+            <div class="ui-bottom">
+                <div class="mission-info">
+                    <h3 id="mission-title">Nhiệm vụ hiện tại</h3>
+                    <p id="mission-description">Bảo vệ căn cứ khỏi cuộc tấn công của địch</p>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn" id="attack-btn">⚔️ Tấn công</button>
+                    <button class="action-btn" id="defend-btn">🛡️ Phòng thủ</button>
+                    <button class="action-btn" id="recruit-btn">👥 Tuyển quân</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Cài đặt</h2>
+                <button class="close-btn" id="close-settings">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h3>Âm thanh</h3>
+                    <div class="setting-item">
+                        <label>Âm lượng chính:</label>
+                        <input type="range" id="master-volume" min="0" max="100" value="50">
+                        <span id="master-volume-value">50%</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>Nhạc nền:</label>
+                        <input type="range" id="music-volume" min="0" max="100" value="30">
+                        <span id="music-volume-value">30%</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>Hiệu ứng âm thanh:</label>
+                        <input type="range" id="sfx-volume" min="0" max="100" value="70">
+                        <span id="sfx-volume-value">70%</span>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h3>Đồ họa</h3>
+                    <div class="setting-item">
+                        <label>Chất lượng:</label>
+                        <select id="graphics-quality">
+                            <option value="low">Thấp</option>
+                            <option value="medium" selected>Trung bình</option>
+                            <option value="high">Cao</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Hiệu ứng hạt:</label>
+                        <input type="checkbox" id="particles-enabled" checked>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h3>Điều khiển</h3>
+                    <div class="setting-item">
+                        <label>Di chuyển: WASD hoặc Phím mũi tên</label>
+                    </div>
+                    <div class="setting-item">
+                        <label>Tấn công: Chuột trái hoặc Space</label>
+                    </div>
+                    <div class="setting-item">
+                        <label>Tạm dừng: ESC hoặc P</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="reset-settings">Khôi phục mặc định</button>
+                <button class="btn primary" id="save-settings">Lưu cài đặt</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div id="leaderboard-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏆 Bảng xếp hạng</h2>
+                <button class="close-btn" id="close-leaderboard">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="leaderboard-tabs">
+                    <button class="tab-btn active" data-tab="global">Toàn cầu</button>
+                    <button class="tab-btn" data-tab="friends">Bạn bè</button>
+                    <button class="tab-btn" data-tab="weekly">Tuần này</button>
+                </div>
+                <div class="leaderboard-content">
+                    <div id="leaderboard-list" class="leaderboard-list">
+                        <!-- Leaderboard entries will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification System -->
+    <div id="notifications" class="notifications-container"></div>
+
+    <!-- Game Scripts -->
+    <script src="js/utils/api.js"></script>
+    <script src="js/utils/storage.js"></script>
+    <script src="js/utils/audio.js"></script>
+    <script src="js/game/gameState.js"></script>
+    <script src="js/game/player.js"></script>
+    <script src="js/game/enemy.js"></script>
+    <script src="js/game/weapon.js"></script>
+    <script src="js/game/level.js"></script>
+    <script src="js/ui/menu.js"></script>
+    <script src="js/ui/hud.js"></script>
+    <script src="js/ui/modals.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
